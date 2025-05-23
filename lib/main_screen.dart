@@ -9,6 +9,16 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final List<int> _lengths = [0, 0, 0];
+
+  int get totalLengths => _lengths.reduce((a, b) => a + b);
+
+  void updateLength(int index, int newLength) {
+    setState(() {
+      _lengths[index] = newLength;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,15 +29,23 @@ class _MainScreenState extends State<MainScreen> {
           spacing: 16,
           children: [
             InputCounterBox(
-              color: Colors.lightGreen, print: '1',
-            
-              
+              color: Colors.lightGreen,
+              print: '1',
+              onTextLengthChanged: (len) => updateLength(0, len) ,
             ),
             InputCounterBox(
-              color: Colors.lightBlue, print: '2',
+              color: Colors.lightBlue,
+              print: '2',
+              onTextLengthChanged: (len) => updateLength(1, len),
             ),
             InputCounterBox(
-              color: Colors.purple, print: '3',
+              color: Colors.purple,
+              print: '3',
+              onTextLengthChanged: (len) => updateLength(2, len),
+            ),
+            Text(
+              'Summe aller Längen: $totalLengths',
+              style: TextStyle(fontSize: 20),
             ),
           ],
         ),
